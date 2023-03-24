@@ -11,17 +11,113 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Employee.belongsTo(models.Position, { foreignKey:'PositionId' })
     }
   }
   Employee.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    gender: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    address: DataTypes.STRING,
-    salary: DataTypes.INTEGER
+    firstName: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'firstName is required'
+        },
+        notEmpty:{
+          msg: 'firstName is required'
+        }
+      }
+    },
+    lastName: {
+      type:DataTypes.STRING,
+    },
+    email: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      unique:true,
+      validate:{
+        notNull:{
+          msg: 'email is required'
+        },
+        notEmpty:{
+          msg: 'email is required'
+        }
+      }
+    },
+    dob: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'dob is required'
+        },
+        notEmpty:{
+          msg: 'dob is required'
+        }
+      }
+    },
+    gender: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'gender is required'
+        },
+        notEmpty:{
+          msg: 'gender is required'
+        }
+      }
+    },
+    phone: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'phone is required'
+        },
+        notEmpty:{
+          msg: 'phone is required'
+        }
+      }
+    },
+    address: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'address is required'
+        },
+        notEmpty:{
+          msg: 'address is required'
+        }
+      }
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'status is required'
+        },
+        notEmpty:{
+          msg: 'status is required'
+        }
+      }
+    },
+    PositionId: {
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'PositionId is required'
+        },
+        notEmpty:{
+          msg: 'PositionId is required'
+        }
+      },
+      references:{
+        model:'Positions'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Employee',

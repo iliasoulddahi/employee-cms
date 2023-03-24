@@ -16,10 +16,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      password: {
-        type: Sequelize.STRING
+      dob: {
+        type: Sequelize.DATE
       },
       gender: {
         type: Sequelize.STRING
@@ -30,8 +30,14 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
-      salary: {
-        type: Sequelize.INTEGER
+      status: {
+        type: Sequelize.STRING,
+      },
+      PositionId: {
+        type:Sequelize.INTEGER,
+        references:{
+          model:'Positions'
+        }
       },
       createdAt: {
         allowNull: false,
