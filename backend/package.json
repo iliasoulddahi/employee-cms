@@ -4,7 +4,8 @@
   "description": "cms employee for technical interview purpose\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Dtest\u001b[C\u001b[C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1;5C\u001b[1; purpose",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon ."
   },
   "keywords": [
     "cms"
