@@ -61,6 +61,9 @@ class EmployeeController {
         const {id:userId} = req.params
         try {
             const employee = await Employee.findByPk(userId)
+            if(!employee){
+                throw {name: 'NotFound'}
+            }
             res.status(200).json(employee)
         } catch (error) {
             next(error)
