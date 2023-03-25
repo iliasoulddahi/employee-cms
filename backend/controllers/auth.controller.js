@@ -34,15 +34,15 @@ class AuthController {
           next(error)
         }
       }
-      
+
       /**
       * Login response access token to client
       */
       static async registerAdmin(req, res, next) {
-        const { name, email, password, gender,phone } = req.body
+        const { name, email, password, gender,phone, imgUrl } = req.body
 
         try {
-            const inserted = await User.create({ name, email, password, gender ,phone, role: "admin" })
+            const inserted = await User.create({ name, email, password,imgUrl, gender ,phone, role: "admin" })
             res.status(201).json({
                 id: inserted.id,
                 email: inserted.email

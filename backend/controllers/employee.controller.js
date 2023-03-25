@@ -70,9 +70,9 @@ class EmployeeController {
         }
     }
     static async createEmployee(req,res,next) {
-        const { firstName, lastName, email, gender, dob,phone, address, position:PositionId } = req.body
+        const { firstName, lastName, email,imgUrl, gender, dob,phone, address, position:PositionId } = req.body
         try {
-            const employee = await Employee.create({ firstName, lastName, email, gender, dob, phone, address, PositionId, status:'inactive' })
+            const employee = await Employee.create({ firstName, lastName, email,imgUrl, gender, dob, phone, address, PositionId, status:'inactive' })
             res.status(200).json(employee)
         } catch (error) {
             next(error)
@@ -133,7 +133,6 @@ class EmployeeController {
         }
     }
     static async findPositions(req,res,next) {
-        console.log('kenaaaaaaaaaaaaaaaaaaaaaaaaa')
         try {
             const position = await Position.findAll()
             res.status(200).json(position)

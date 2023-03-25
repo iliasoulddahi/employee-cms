@@ -1,170 +1,251 @@
 <script>
+import axios from "axios";
+import moment from "moment";
+import Pagination from "v-pagination-3";
+import Swal from 'sweetalert2'
 export default {
-    name:'EmployeesView',
-    data(){
-        return {
-            apiUrl:'http://localhost:3000/employee/'
-        }
+  name: "EmployeesView",
+  components: {
+    Pagination,
+  },
+  data() {
+    return {
+      employees: {},
+      positions: [],
+      apiUrl: "http://localhost:3000/employee/",
+      queryName: "",
+      queryPosition: "",
+      page: 1,
+      size: 7,
+    };
+  },
+  methods: {
+    async fetchEmployees() {
+      const params = {};
+      if (this.queryName) {
+        params["name"] = this.queryName;
+      }
+      if (this.queryPosition) {
+        params["position"] = this.queryPosition;
+      }
+      if (this.page) {
+        params["page"] = this.page - 1;
+      }
+      if (this.size) {
+        params["size"] = this.size;
+      }
+      try {
+        const { data } = await axios.get(this.apiUrl, {
+          headers: {
+            token: localStorage.token,
+          },
+          params,
+        });
+        this.employees = data;
+      } catch (error) {
+        console.log(error.response.data);
+      }
     },
-    methods: {
-        async fetchEmployees() {
-            const employees = await fetch(this.apiUrl)
-            
-        }
+    async fetchPositions() {
+      try {
+        const { data } = await axios.get(this.apiUrl + "positions", {
+          headers: {
+            token: localStorage.token,
+          },
+        });
+        console.log(data);
+        this.positions = data;
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    },
+    getJoinedFrom(date) {
+      return "Joined From " + moment(date).fromNow();
+    },
+    formatRupiah(money) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(money);
+    },
+    handlePositionChange() {
+      this.queryName = "";
+      this.fetchEmployees();
+    },
+    handleSearchChange() {
+      this.queryPosition = "";
+      this.fetchEmployees();
+    },
+    async handleDeleteEmployee(id) {
+      try {
+        await axios.delete(this.apiUrl + id, {
+          headers: {
+            token: localStorage.token,
+          },
+        });
+        this.fetchEmployees()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: 'Delete Employee Success',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } catch (error) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error?.response?.data?.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    },
+    async handleChangeStatus(id){
+        try {
+        await axios.patch(this.apiUrl + id,{}, {
+          headers: {
+            token: localStorage.token,
+          },
+        });
+        this.fetchEmployees()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: 'Status Changed',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } catch (error) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error?.response?.data?.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
-}
+  },
+  created() {
+    this.fetchEmployees();
+    this.fetchPositions();
+  },
+};
 </script>
 
 <template>
-<div class="overflow-x-auto w-full">
-  <table class="table w-full">
-    <!-- head -->
-    <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- row 1 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar">
-              <div class="mask mask-squircle w-12 h-12">
-                <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
+  <div class="overflow-x-auto w-full">
+    <div class="flex justify-between py-5 px-24">
+      <select
+        class="select select-bordered select-sm w-full max-w-xs"
+        @change="handlePositionChange"
+        v-model="queryPosition"
+      >
+        <option selected value="">All Positions</option>
+        <option v-for="e in positions" :key="e.id" :value="e.id">
+          {{ e.name }}
+        </option>
+      </select>
+      <button class="" @click.prevent="$router.push('/add-employee')">
+        <i class="bi bi-plus-circle-fill"></i> Add Employee
+      </button>
+
+      <input
+        v-model="queryName"
+        @keyup="handleSearchChange"
+        type="text"
+        placeholder="Search Employee"
+        class="input input-bordered input-sm w-full max-w-xs"
+      />
+    </div>
+    <table class="w-full">
+      <!-- head -->
+      <thead>
+        <tr class="text-left text-xl">
+          <th></th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Salary</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        <tr v-for="e in employees?.employees" :key="e.id">
+          <th>
+            <label>
+              <input type="checkbox" class="checkbox" />
+            </label>
+          </th>
+          <td>
+            <div class="flex items-center space-x-3">
+              <div class="avatar">
+                <div class="mask mask-squircle w-12 h-12">
+                  <img :src="e.imgUrl" alt="Avatar Tailwind CSS Component" />
+                </div>
+              </div>
+              <div>
+                <div class="font-bold">{{ e.firstName }} {{ e.lastName }}</div>
+                <div class="text-sm opacity-50">{{ e.address }}</div>
               </div>
             </div>
-            <div>
-              <div class="font-bold">Hart Hagerty</div>
-              <div class="text-sm opacity-50">United States</div>
+          </td>
+          <td>
+            {{ e.Position.name }}
+            <br />
+            <span class="badge badge-ghost badge-sm">{{
+              getJoinedFrom(e.createdAt)
+            }}</span>
+          </td>
+          <td>{{ formatRupiah(e.Position.salary) }}</td>
+          <td>{{ e.status === "active" ? "active" : "inactive" }}</td>
+          <th>
+            <div class="dropdown dropdown-left">
+              <label tabindex="0" class="cursor-pointer m-1"
+                ><i class="bi bi-three-dots-vertical"></i
+              ></label>
+              <ul
+                tabindex="0"
+                class="font-normal dropdown-content menu menu-compact shadow bg-base-100 rounded-box w-44"
+              >
+                <li>
+                  <a><i class="bi bi-pencil-square"></i> Edit</a>
+                </li>
+                <li>
+                    <a @click="handleDeleteEmployee(e.id)"><i class="bi bi-trash3"></i> Delete</a>
+                </li>
+                <li>
+                  <a @click="handleChangeStatus(e.id)" ><i class="bi bi-check2-square"></i> Change Status</a>
+                </li>
+              </ul>
             </div>
-          </div>
-        </td>
-        <td>
-          Zemlak, Daniel and Leannon
-          <br/>
-          <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
-        </td>
-        <td>Purple</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 2 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar">
-              <div class="mask mask-squircle w-12 h-12">
-                <img src="/tailwind-css-component-profile-3@56w.png" alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Brice Swyre</div>
-              <div class="text-sm opacity-50">China</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Carroll Group
-          <br/>
-          <span class="badge badge-ghost badge-sm">Tax Accountant</span>
-        </td>
-        <td>Red</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 3 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar">
-              <div class="mask mask-squircle w-12 h-12">
-                <img src="/tailwind-css-component-profile-4@56w.png" alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Marjy Ferencz</div>
-              <div class="text-sm opacity-50">Russia</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Rowe-Schoen
-          <br/>
-          <span class="badge badge-ghost badge-sm">Office Assistant I</span>
-        </td>
-        <td>Crimson</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 4 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center space-x-3">
-            <div class="avatar">
-              <div class="mask mask-squircle w-12 h-12">
-                <img src="/tailwind-css-component-profile-5@56w.png" alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Yancy Tear</div>
-              <div class="text-sm opacity-50">Brazil</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Wyman-Ledner
-          <br/>
-          <span class="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-        </td>
-        <td>Indigo</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-    </tbody>
-    <!-- foot -->
-    <tfoot>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-        <th></th>
-      </tr>
-    </tfoot>
-    
-  </table>
-</div>
+          </th>
+        </tr>
+      </tbody>
+      <!-- foot -->
+      <tfoot></tfoot>
+    </table>
+    <div class="flex justify-center">
+      <pagination
+        v-model="page"
+        :records="employees?.totalItems"
+        :per-page="size"
+        @paginate="() => fetchEmployees()"
+        :options="{
+          hideCount: true,
+          edgeNavigation: false,
+          chunksNavigation: 'scroll',
+        }"
+      />
+    </div>
+  </div>
 </template>
+
+<style scoped>
+th,
+td {
+  padding: 1rem;
+}
+</style>

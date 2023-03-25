@@ -43,6 +43,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    imgUrl: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'imgUrl is required'
+        },
+        notEmpty:{
+          msg: 'imgUrl is required'
+        }
+      }
+    },
     dob: {
       type:DataTypes.STRING,
       allowNull:false,
@@ -108,10 +120,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate:{
         notNull:{
-          msg: 'PositionId is required'
+          msg: 'Position is required'
         },
         notEmpty:{
-          msg: 'PositionId is required'
+          msg: 'Position is required'
         }
       },
       references:{
