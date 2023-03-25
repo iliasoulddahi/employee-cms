@@ -135,7 +135,10 @@ export default {
 </script>
 
 <template>
-  <div class="overflow-x-auto w-full">
+    <div v-if="!employees?.employees" class="w-full h-screen flex justify-center items-center">
+        <img src="../assets/loading.gif" alt="" srcset="">
+    </div>
+  <div class="overflow-x-auto w-full" v-else>
     <div class="flex justify-between py-5 px-24">
       <select
         class="select select-bordered select-sm w-full max-w-xs"

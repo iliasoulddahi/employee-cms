@@ -48,18 +48,8 @@ export default {
   <h1 class="text-center text-2xl">Employee CMS Technical Test GMS</h1>
   <div class="hero min-h-screen">
     <div class="hero-content flex-col lg:flex-row-reverse">
-      <div>
-        <div>
-          <p>Email : admin@mail.com</p>
-          <p>password : 123456</p>
-        </div>
-        <div>
-          <p>Email : superadmin@mail.com</p>
-          <p>password : 123456</p>
-        </div>
-      </div>
       <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        <div class="card-body">
+        <form @submit.prevent="login" class="card-body">
           <div class="form-control">
             <label class="label">
               <span class="label-text">Email</span>
@@ -83,9 +73,9 @@ export default {
             />
           </div>
           <div class="form-control mt-6">
-            <button @click="login" class="btn bg-gray-700">Login</button>
+            <button type="submit" class="btn bg-gray-700">Login</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

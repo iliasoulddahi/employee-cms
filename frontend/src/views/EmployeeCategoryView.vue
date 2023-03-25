@@ -135,8 +135,11 @@ export default {
 </script>
 
 <template>
-  <div class="overflow-x-auto w-full">
-        <h1 class="text-xl text-center py-10">Employee For Position {{ positions.find(e=> e.id === +$route.params.id).name }}</h1>
+        <div v-if="!employees?.employees" class="w-full h-screen flex justify-center items-center">
+        <img src="../assets/loading.gif" alt="" srcset="">
+    </div>
+  <div class="overflow-x-auto w-full" v-else>
+        <h1 class="text-2xl text-center py-10">Employees For Position {{ positions.find(e=> e.id === +$route.params.id).name }}</h1>
     <table class="w-full">
       <!-- head -->
       <thead>
