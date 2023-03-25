@@ -25,11 +25,11 @@ class AuthController {
           const isValid = comparePassword(password, user.password)
           if (!isValid) throw err
     
-          const { id, role, username } = user
+          const { id, role, name, imgUrl } = user
     
-          const token = signToken({ id, role, username, email })
+          const token = signToken({ id, role, name, email })
     
-          res.status(200).json({ token })
+          res.status(200).json({ token, username:name, imgUrl })
         } catch (error) {
           next(error)
         }

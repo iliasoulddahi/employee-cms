@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 // import LoginView from '../views/LoginView.vue'
 // import RegisterView from '../views/RegisterView.vue'
 
@@ -9,17 +8,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component:() => import('../views/EmployeesView.vue')
     },
     {
       path:'/login',
       name:'login',
-      component:null
-    },
-    {
-      path:'/register',
-      name:'register',
-      component:null
+      component:() => import('../views/LoginView.vue')
     },
     {
       path: '/employees',
@@ -32,16 +26,32 @@ const router = createRouter({
       component:() => import('../views/AddEmployeeView.vue')
     },
     {
+      path: '/edit-employee/:id',
+      name: 'editEmployees',
+      component:() => import('../views/EditEmployeeView.vue')
+    },
+    {
       path: '/positions',
       name: 'positions',
       component:() => import('../views/PositionsView.vue')
-    }
+    },
+    {
+      path: '/detail-employee/:id',
+      name: 'detailEmployee',
+      component:() => import('../views/DetailEmployeeView.vue')
+    },
+    {
+      path: '/employee-category/:id',
+      name: 'EmployeeCategory',
+      component:() => import('../views/EmployeeCategoryView.vue')
+    },
+    
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (to.name === 'login' && localStorage.access_token) next('/')
-  if (to.name === 'register' && localStorage.access_token) next('/')
-  if (to.name === 'favorite' && !localStorage.access_token) next('/')
+  if (to.name === 'login' && localStorage.token) next('/')
+  if (to.name !== 'login' && !localStorage.token) next('/login')
+
   else next()
 })
 

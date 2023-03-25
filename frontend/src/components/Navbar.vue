@@ -21,7 +21,7 @@ export default {
 <template>
     <div class="navbar bg-base-100 px-12">
   <div class="flex-1">
-    <a class="normal-case font-semibold text-3xl">Employee CMS</a>
+    <RouterLink to="/" class="normal-case font-semibold text-3xl">Employee CMS</RouterLink>
   </div>
   <div class="flex-none gap-2">
     <div class="dropdown dropdown-end">
@@ -32,14 +32,14 @@ export default {
             <span>{{ username }} </span>
       </label>
       <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-        <li><a>Profile</a></li>
         <li><a @click="handleLogout">Logout</a></li>
       </ul>
     </div>
   </div>
 </div>
-<nav class="flex justify-center text-xl">
-    <RouterLink to="/employees" class="px-4">Employees</RouterLink>
-    <RouterLink to="/positions" class="px-4">Positions</RouterLink>
+<nav class="flex justify-center text-xl font-semibold">
+    <RouterLink to="/employees" class="px-4 text-lg">Employees</RouterLink>
+    <RouterLink to="/positions" class="px-4 text-lg">Positions</RouterLink>
 </nav>
+<hr>
 </template>

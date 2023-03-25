@@ -242,7 +242,7 @@ const Employees = [
   const Users = [
     {
         "name":"admin",
-        "email":"admin@mail.co",
+        "email":"admin@mail.com",
         "password":"123456",
         "imgUrl":"https://randomuser.me/api/portraits/men/61.jpg",
         "gender":"male",

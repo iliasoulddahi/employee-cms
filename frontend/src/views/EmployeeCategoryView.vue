@@ -4,7 +4,7 @@ import moment from "moment";
 import Pagination from "v-pagination-3";
 import Swal from 'sweetalert2'
 export default {
-  name: "EmployeesView",
+  name: "EmployeesCategoryView",
   components: {
     Pagination,
   },
@@ -14,7 +14,7 @@ export default {
       positions: [],
       apiUrl: "http://localhost:3000/employee/",
       queryName: "",
-      queryPosition: "",
+      queryPosition: this.$route.params.id,
       page: 1,
       size: 7,
     };
@@ -136,29 +136,7 @@ export default {
 
 <template>
   <div class="overflow-x-auto w-full">
-    <div class="flex justify-between py-5 px-24">
-      <select
-        class="select select-bordered select-sm w-full max-w-xs"
-        @change="handlePositionChange"
-        v-model="queryPosition"
-      >
-        <option selected value="">All Positions</option>
-        <option v-for="e in positions" :key="e.id" :value="e.id">
-          {{ e.name }}
-        </option>
-      </select>
-      <button class="" @click.prevent="$router.push('/add-employee')">
-        <i class="bi bi-plus-circle-fill"></i> Add Employee
-      </button>
-
-      <input
-        v-model="queryName"
-        @keyup="handleSearchChange"
-        type="text"
-        placeholder="Search Employee"
-        class="input input-bordered input-sm w-full max-w-xs"
-      />
-    </div>
+        <h1 class="text-xl text-center py-10">Employee For Position {{ positions.find(e=> e.id === +$route.params.id).name }}</h1>
     <table class="w-full">
       <!-- head -->
       <thead>

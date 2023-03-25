@@ -60,7 +60,14 @@ class EmployeeController {
     static async findEmployeeById(req,res,next) {
         const {id:userId} = req.params
         try {
-            const employee = await Employee.findByPk(userId)
+            const employee = await Employee.findOne({
+                where: {
+                    id:userId
+                },
+                include:{
+                    model:Position
+                }
+            })
             if(!employee){
                 throw {name: 'NotFound'}
             }
