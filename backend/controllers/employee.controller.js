@@ -1,6 +1,9 @@
 const { Op } = require('sequelize');
 const { Employee,Position } = require('../models')
 class EmployeeController {
+    /**
+     * Get All Employee with pagination & filter
+     */
     static async findEmployee(req,res,next) {
         const { size, page, position, name } = req.query
 
@@ -57,10 +60,20 @@ class EmployeeController {
             next(err)
         }
     }
+    /**
+     * Get Employee By Id Response Object Employee
+     */
     static async findEmployeeById(req,res,next) {
         const {id:userId} = req.params
         try {
-            const employee = await Employee.findByPk(userId)
+            const employee = await Employee.findOne({
+                where: {
+                    id:userId
+                },
+                include:{
+                    model:Position
+                }
+            })
             if(!employee){
                 throw {name: 'NotFound'}
             }
@@ -69,15 +82,21 @@ class EmployeeController {
             next(error)
         }
     }
+    /**
+     * Create new employee
+     */
     static async createEmployee(req,res,next) {
-        const { firstName, lastName, email, gender, dob,phone, address, position:PositionId } = req.body
+        const { firstName, lastName, email,imgUrl, gender, dob,phone, address, position:PositionId } = req.body
         try {
-            const employee = await Employee.create({ firstName, lastName, email, gender, dob, phone, address, PositionId, status:'inactive' })
+            const employee = await Employee.create({ firstName, lastName, email,imgUrl, gender, dob, phone, address, PositionId, status:'inactive' })
             res.status(200).json(employee)
         } catch (error) {
             next(error)
         }
     }
+    /**
+     * Update Employee datas
+     */
     static async updateEmployee(req,res,next) {
         const { id } = req.params
         const { firstName, lastName, email, gender, dob,phone, address } = req.body
@@ -87,11 +106,14 @@ class EmployeeController {
                     id
                 }
             })
-            res.status(200).json('update success')
+            res.status(200).json({message:'update success'})
         } catch (error) {
             next(error)
         }
     }
+    /**
+     * change Employee status active | inactive
+     */
     static async updateEmployeeStatus(req,res,next) {
         const { id } = req.params
         try {
@@ -114,11 +136,14 @@ class EmployeeController {
                     id
                 }
             })
-            res.status(200).json('update status success')
+            res.status(200).json({message:'update status success'})
         } catch (error) {
             next(error)
         }
     }
+    /**
+     * Delete Employee by id
+     */
     static async deleteEmployee(req,res,next) {
         const { id } = req.params
         try {
@@ -127,7 +152,18 @@ class EmployeeController {
                     id
                 }
             })
-            res.status(200).json('delete success')
+            res.status(200).json({message:'delete success'})
+        } catch (error) {
+            next(error)
+        }
+    }
+    /**
+     * Get All Positions
+     */
+    static async findPositions(req,res,next) {
+        try {
+            const position = await Position.findAll()
+            res.status(200).json(position)
         } catch (error) {
             next(error)
         }
