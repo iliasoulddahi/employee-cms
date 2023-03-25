@@ -36,7 +36,7 @@ class AuthController {
       }
 
       /**
-      * Login response access token to client
+      * create new admin by superadmin
       */
       static async registerAdmin(req, res, next) {
         const { name, email, password, gender,phone, imgUrl } = req.body

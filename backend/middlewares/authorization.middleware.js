@@ -1,3 +1,6 @@
+/**
+ * Authorization for admin & superadmin access 
+ */
 module.exports = async (req, res, next) => {
     try {
         const role = req.user.role

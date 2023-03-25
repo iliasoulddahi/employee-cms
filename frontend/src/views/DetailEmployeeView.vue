@@ -91,7 +91,10 @@ export default {
 };
 </script>
 <template>
-  <div class="flex justify-center">
+        <div v-if="!employee?.firstName" class="w-full h-screen flex justify-center items-center">
+        <img src="../assets/loading.gif" alt="" srcset="">
+    </div>
+  <div class="flex justify-center" v-else>
     <div class="" style="width: 600px">
       <div class="hero-content flex lg:flex-row-reverse justify-center">
         <img :src="employee?.imgUrl" class="max-w-sm rounded-lg shadow-2xl" />
