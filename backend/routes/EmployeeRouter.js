@@ -6,10 +6,10 @@ const authorizationSuperAdminMiddleware = require('../middlewares/authorizationS
 
 router.use(authenticationMiddleware)
 router.get('/', authorizationMiddleware ,EmployeeController.findEmployee)
+router.get('/positions',authorizationMiddleware ,EmployeeController.findPositions)
 router.get('/:id', authorizationMiddleware, EmployeeController.findEmployeeById)
 router.post('/', authorizationMiddleware, EmployeeController.createEmployee)
 router.put('/:id', authorizationMiddleware, EmployeeController.updateEmployee)
 router.patch('/:id', authorizationMiddleware, EmployeeController.updateEmployeeStatus)
 router.delete('/:id',authorizationSuperAdminMiddleware ,EmployeeController.deleteEmployee)
-
 module.exports = router

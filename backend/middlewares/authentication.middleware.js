@@ -28,6 +28,7 @@ module.exports = async (req, res , next) => {
         next()  
           
     } catch (err) {
+        console.log('>>>>>>>>>', 'errrrrrrrrrrrrrrrrrrrrrrorss di auth')
         next(err)
     }
 }

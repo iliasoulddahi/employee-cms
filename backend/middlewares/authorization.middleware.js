@@ -1,7 +1,6 @@
 module.exports = async (req, res, next) => {
     try {
         const role = req.user.role
-        console.log('>>>>>>>>>', role)
         const isAllow = role === "admin" || role === "superadmin"
         if(!isAllow){
             throw{
@@ -11,6 +10,7 @@ module.exports = async (req, res, next) => {
 
         next()
     } catch (err) {
+        console.log('>>>>>>>>>', 'errrrrrrrrrrrrrrrrrrrrrrorss')
         next(err)
     }
 }

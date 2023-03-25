@@ -132,5 +132,14 @@ class EmployeeController {
             next(error)
         }
     }
+    static async findPositions(req,res,next) {
+        console.log('kenaaaaaaaaaaaaaaaaaaaaaaaaa')
+        try {
+            const position = await Position.findAll()
+            res.status(200).json(position)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 module.exports = EmployeeController
