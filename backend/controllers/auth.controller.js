@@ -25,24 +25,24 @@ class AuthController {
           const isValid = comparePassword(password, user.password)
           if (!isValid) throw err
     
-          const { id, role, username } = user
+          const { id, role, name, imgUrl } = user
     
-          const token = signToken({ id, role, username, email })
+          const token = signToken({ id, role, name, email })
     
-          res.status(200).json({ token })
+          res.status(200).json({ token, username:name, imgUrl })
         } catch (error) {
           next(error)
         }
       }
-      
+
       /**
-      * Login response access token to client
+      * create new admin by superadmin
       */
       static async registerAdmin(req, res, next) {
-        const { name, email, password, gender,phone } = req.body
+        const { name, email, password, gender,phone, imgUrl } = req.body
 
         try {
-            const inserted = await User.create({ name, email, password, gender ,phone, role: "admin" })
+            const inserted = await User.create({ name, email, password,imgUrl, gender ,phone, role: "admin" })
             res.status(201).json({
                 id: inserted.id,
                 email: inserted.email

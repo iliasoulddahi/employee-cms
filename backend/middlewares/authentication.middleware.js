@@ -1,5 +1,8 @@
 const { verifyToken } = require('../helpers/jwt')
 const { User } = require('../models')
+/**
+ * check authentication token before access endpoint  
+ */
 module.exports = async (req, res , next) => {
     try {
         const {token} = req.headers
@@ -28,6 +31,7 @@ module.exports = async (req, res , next) => {
         next()  
           
     } catch (err) {
+        console.log('>>>>>>>>>', 'errrrrrrrrrrrrrrrrrrrrrrorss di auth')
         next(err)
     }
 }
