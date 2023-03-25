@@ -6,7 +6,7 @@ export default {
   name: "DetailEmployeeView",
   data() {
     return {
-      apiUrl: "http://localhost:3000/employee/",
+      apiUrl: "https://employee-cms-api.up.railway.app/employee/",
       employee: {},
     };
   },

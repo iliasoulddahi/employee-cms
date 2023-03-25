@@ -6,7 +6,7 @@ export default {
   name: "LoginView",
   data() {
     return {
-      apiUrl: "http://localhost:3000/",
+      apiUrl: "https://employee-cms-api.up.railway.app/",
       email: "",
       password: "",
     };

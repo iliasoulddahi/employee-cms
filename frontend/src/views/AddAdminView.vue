@@ -5,7 +5,7 @@ export default {
   name: "AddAdminView",
   data() {
     return {
-      apiUrl: "http://localhost:3000/auth/",
+      apiUrl: "https://employee-cms-api.up.railway.app/auth/",
       name: "",
       email: "",
       password: "",
