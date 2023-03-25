@@ -98,7 +98,7 @@ export default {
 </script>
 
 <template>
-        <h1 class="text-xl text-center mt-10">Edit Employee</h1>
+        <h1 class="text-xl text-center mt-5">Edit Employee</h1>
   <div class="min-h-screen flex items-center">
     <div class="bg-white p-10 md:w-2/3 lg:w-1/2 mx-auto rounded">
       <form action="">

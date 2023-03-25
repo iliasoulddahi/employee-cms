@@ -37,10 +37,10 @@ export default {
 </script>
 
 <template>
-        <div v-if="!positions.length === 0" class="w-full h-screen flex justify-center items-center">
+        <div v-if="positions.length === 0" class="w-full h-screen flex justify-center items-center">
         <img src="../assets/loading.gif" alt="" srcset="">
     </div>
-    <div class="overflow-x-auto px-5" v-else>
+    <div class="overflow-x-auto px-5 pt-10" v-else>
         <table class="w-full">
       <!-- head -->
       <thead>

@@ -45,7 +45,11 @@ const router = createRouter({
       name: 'EmployeeCategory',
       component:() => import('../views/EmployeeCategoryView.vue')
     },
-    
+    {
+      path: '/add-admin',
+      name: 'AddAdmin',
+      component:() => import('../views/AddAdminView.vue')
+    },
   ]
 })
 router.beforeEach((to, from, next) => {

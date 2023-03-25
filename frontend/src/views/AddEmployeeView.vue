@@ -76,9 +76,10 @@ export default {
 </script>
 
 <template>
+     <h1 class="text-xl text-center mt-5">Add Employee</h1>
   <div class="min-h-screen flex items-center">
     <div class="bg-white p-10 md:w-2/3 lg:w-1/2 mx-auto rounded">
-      <form action="">
+      <form @submit.prevent="postEmployee">
         <div class="flex items-center mb-5">
           <label
             for="name"
@@ -216,7 +217,7 @@ export default {
             Cancel
           </button>
           <button
-            @click.prevent="postEmployee"
+            type="submit"
             class="py-3 px-8 bg-green-500 text-green-100 font-bold rounded"
           >
             Submit

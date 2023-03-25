@@ -38,8 +38,9 @@ export default {
   </div>
 </div>
 <nav class="flex justify-center text-xl font-semibold">
-    <RouterLink to="/employees" class="px-4 text-lg">Employees</RouterLink>
-    <RouterLink to="/positions" class="px-4 text-lg">Positions</RouterLink>
+    <RouterLink to="/employees" class="px-4 text-lg"><i class="bi bi-person-lines-fill"></i>Employees</RouterLink>
+    <RouterLink to="/positions" class="px-4 text-lg"><i class="bi bi-person-workspace"></i>Positions</RouterLink>
+    <RouterLink to="/add-admin" class="px-4 text-lg"><i class="bi bi-person-add"></i>Add Admin</RouterLink>
 </nav>
 <hr>
 </template>
