@@ -14,4 +14,5 @@ app.use(express.json())
 app.use(router)
 app.use(errorMiddleware)
 
-app.listen(port, ()=> console.log(`Listening To Port ${port}`))
+app.listen(port, ()=> console.log(`Listening To Port ${port}`));
+module.exports = app;
