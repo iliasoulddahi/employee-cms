@@ -7,8 +7,8 @@ export default {
   data() {
     return {
       apiUrl: "https://employee-cms-api.up.railway.app/",
-      email: "",
-      password: "",
+      email: "superadmin@mail.com",
+      password: "123456",
     };
   },
   methods: {
