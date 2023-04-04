@@ -45,7 +45,7 @@ export default {
 </script>
 
 <template>
-  <h1 class="text-center text-2xl">Employee CMS Technical Test GMS</h1>
+  <h1 class="text-center text-2xl">Employee CMS</h1>
   <div class="hero min-h-screen">
     <div class="hero-content flex-col lg:flex-row-reverse">
       <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
