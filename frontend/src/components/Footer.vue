@@ -6,7 +6,7 @@ export default {
 <template>
     <footer class="py-10 flex justify-center">
         <div class="text-center">
-            <p>technical test purpose @iliasoulddahi</p>
+            <p>@iliasoulddahi</p>
             <a href="https://github.com/iliasoulddahi/employee-cms">Source Code</a>
         </div>
     </footer>
